@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace 'com.onyx.android.demo'
-    compileSdk 34
+    compileSdk 36
 
     buildFeatures {
         dataBinding true
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.android.onyx.demo"
         minSdk 23
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
