@@ -36,7 +36,7 @@
         <activity android:name="com.android.onyx.demo.BooxSettingsDemoActivity" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.onyx.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >

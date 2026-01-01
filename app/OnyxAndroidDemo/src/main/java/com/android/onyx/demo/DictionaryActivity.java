@@ -3,7 +3,7 @@ package com.android.onyx.demo;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
