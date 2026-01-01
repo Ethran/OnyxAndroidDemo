@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    namespace 'com.onyx.android.eink.pen.demo'
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.android.onyx.eink.pen.demo"
-        minSdkVersion 26
-        targetSdkVersion 30
+        minSdk 26
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -38,8 +38,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 
     packagingOptions {
@@ -55,7 +55,7 @@ android {
         exclude 'lib/*/libc++.so'
     }
 
-    lintOptions {
+    lint {
         abortOnError false
     }
 

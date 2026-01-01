@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "29.0.2"
-    dataBinding {
-        enabled = true
+    namespace 'com.onyx.android.demo'
+    compileSdk 34
+
+    buildFeatures {
+        dataBinding true
     }
     defaultConfig {
         applicationId "com.android.onyx.demo"
-        minSdkVersion 23
-        targetSdkVersion 30
+        minSdk 23
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -17,8 +18,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                includeCompileClasspath = true
-                arguments=['targetModuleName':'Scribble']
+                arguments = [targetModuleName: 'Scribble']
             }
         }
 
@@ -33,7 +33,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         abortOnError false
     }
 
