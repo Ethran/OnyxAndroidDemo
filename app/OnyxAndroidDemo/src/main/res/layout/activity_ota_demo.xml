@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前固件信息："
+                android:text="@string/current_firmware_info"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
 

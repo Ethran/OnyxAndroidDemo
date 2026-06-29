@@ -192,22 +192,20 @@ public class ScribblePenUpRefreshDemoActivity extends AppCompatActivity {
             canvas = new Canvas(bitmap);
         }
 
-        switch (binding.rgStrokeStyle.getCheckedRadioButtonId()) {
-            case R.id.rb_brush:
-                float maxPressure = EpdController.getMaxTouchPressure();
-                NeoBrushPenWrapper.drawStroke(canvas, paint, list, STROKE_WIDTH, maxPressure, false);
-                break;
-            default:
-                Path path = new Path();
-                PointF prePoint = new PointF(list.get(0).x, list.get(0).y);
-                path.moveTo(prePoint.x, prePoint.y);
-                for (TouchPoint point : list) {
-                    path.quadTo(prePoint.x, prePoint.y, point.x, point.y);
-                    prePoint.x = point.x;
-                    prePoint.y = point.y;
-                }
-                canvas.drawPath(path, paint);
-                break;
+        int checkedId = binding.rgStrokeStyle.getCheckedRadioButtonId();
+        if (checkedId == R.id.rb_brush) {
+            float maxPressure = EpdController.getMaxTouchPressure();
+            NeoBrushPenWrapper.drawStroke(canvas, paint, list, STROKE_WIDTH, maxPressure, false);
+        } else {
+            Path path = new Path();
+            PointF prePoint = new PointF(list.get(0).x, list.get(0).y);
+            path.moveTo(prePoint.x, prePoint.y);
+            for (TouchPoint point : list) {
+                path.quadTo(prePoint.x, prePoint.y, point.x, point.y);
+                prePoint.x = point.x;
+                prePoint.y = point.y;
+            }
+            canvas.drawPath(path, paint);
         }
     }
 

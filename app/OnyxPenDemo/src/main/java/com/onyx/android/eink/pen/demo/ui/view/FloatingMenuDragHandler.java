@@ -24,7 +24,7 @@ public class FloatingMenuDragHandler implements View.OnTouchListener {
     private TouchPoint lastMovePoint;
     private Size measureSize;
 
-    private static final long LONG_PRESS_THRESHOLD = 500; // 长按阈值，单位毫秒
+    private static final long LONG_PRESS_THRESHOLD = 500; // Long press threshold, unit: ms
     private boolean isLongPressed;
     private long downTime;
 

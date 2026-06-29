@@ -16,7 +16,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="刷新模式："
+                android:text="@string/refresh_mode_label"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="普通刷新"
+                    android:text="@string/refresh_mode_normal"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Regal刷新"
+                    android:text="@string/refresh_mode_regal"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="快速刷新"
+                    android:text="@string/refresh_mode_fast_quality"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -60,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="极速刷新"
+                    android:text="@string/refresh_mode_fast"
                     android:textSize="16sp" />
 
                 <RadioButton
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="X 刷新"
+                    android:text="@string/refresh_mode_fast_x"
                     android:textSize="16sp" />
 
             </RadioGroup>
