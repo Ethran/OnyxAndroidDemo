@@ -18,11 +18,29 @@
                 android:layout_height="wrap_content"
                 android:text="Scribble Demo" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="22sp"
+                android:text="@string/desc_scribble_demo" />
+
             <Button
                 android:id="@+id/button_pen_demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pen demo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="22sp"
+                android:text="@string/desc_pen_demo" />
         </LinearLayout>
 
     </RelativeLayout>
