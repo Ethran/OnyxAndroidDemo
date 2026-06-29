@@ -1,6 +1,7 @@
 package com.android.onyx.demo;
 
 import android.os.Bundle;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.RadioGroup;
 
@@ -9,8 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import com.android.onyx.demo.databinding.ActivityRefreshModeDemoBinding;
 import com.onyx.android.sdk.api.device.epd.UpdateOption;
 import com.onyx.android.sdk.device.Device;
-
-import org.jetbrains.annotations.Nullable;
 
 
 public class RefreshModeDemoActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
@@ -35,22 +34,16 @@ public class RefreshModeDemoActivity extends AppCompatActivity implements RadioG
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-        switch (checkedId) {
-            case R.id.rb_normal:
-                Device.currentDevice().setAppScopeRefreshMode(UpdateOption.NORMAL);
-                break;
-            case R.id.rb_fast_quality:
-                Device.currentDevice().setAppScopeRefreshMode(UpdateOption.FAST_QUALITY);
-                break;
-            case R.id.rb_regal:
-                Device.currentDevice().setAppScopeRefreshMode(UpdateOption.REGAL);
-                break;
-            case R.id.rb_fast:
-                Device.currentDevice().setAppScopeRefreshMode(UpdateOption.FAST);
-                break;
-            case R.id.rb_fast_x:
-                Device.currentDevice().setAppScopeRefreshMode(UpdateOption.FAST_X);
-                break;
+        if (checkedId == R.id.rb_normal) {
+            Device.currentDevice().setAppScopeRefreshMode(UpdateOption.NORMAL);
+        } else if (checkedId == R.id.rb_fast_quality) {
+            Device.currentDevice().setAppScopeRefreshMode(UpdateOption.FAST_QUALITY);
+        } else if (checkedId == R.id.rb_regal) {
+            Device.currentDevice().setAppScopeRefreshMode(UpdateOption.REGAL);
+        } else if (checkedId == R.id.rb_fast) {
+            Device.currentDevice().setAppScopeRefreshMode(UpdateOption.FAST);
+        } else if (checkedId == R.id.rb_fast_x) {
+            Device.currentDevice().setAppScopeRefreshMode(UpdateOption.FAST_X);
         }
     }
 

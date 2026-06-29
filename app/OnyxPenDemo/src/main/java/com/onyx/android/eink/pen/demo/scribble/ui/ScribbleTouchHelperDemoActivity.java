@@ -208,19 +208,17 @@ public class ScribbleTouchHelperDemoActivity extends AppCompatActivity {
 
         boolean checked = ((RadioButton) radioButton).isChecked();
         Log.d(TAG, radioButton.toString());
-        switch (radioButton.getId()) {
-            case R.id.rb_brush:
-                if (checked) {
-                    touchHelper.setStrokeStyle(TouchHelper.STROKE_STYLE_FOUNTAIN);
-                    Log.d(TAG, "STROKE_STYLE_FOUNTAIN");
-                }
-                break;
-            case R.id.rb_pencil:
-                if (checked) {
-                    touchHelper.setStrokeStyle(TouchHelper.STROKE_STYLE_PENCIL);
-                    Log.d(TAG, "STROKE_STYLE_PENCIL");
-                }
-                break;
+        int id = radioButton.getId();
+        if (id == R.id.rb_brush) {
+            if (checked) {
+                touchHelper.setStrokeStyle(TouchHelper.STROKE_STYLE_FOUNTAIN);
+                Log.d(TAG, "STROKE_STYLE_FOUNTAIN");
+            }
+        } else if (id == R.id.rb_pencil) {
+            if (checked) {
+                touchHelper.setStrokeStyle(TouchHelper.STROKE_STYLE_PENCIL);
+                Log.d(TAG, "STROKE_STYLE_PENCIL");
+            }
         }
         // refresh ui
         onEraserClick();
