@@ -5,7 +5,7 @@ android {
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.android.onyx.eink.pen.demo"
+        applicationId "com.onyx.android.eink.pen.demo"
         minSdk 26
         targetSdk 36
         versionCode 1
