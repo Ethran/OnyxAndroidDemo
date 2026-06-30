@@ -36,6 +36,7 @@ public class ScribbleMultipleScribbleViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scribble_multiple_scrubble_view_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
         binding.setActivityScribbleMultiple(this);
 
         touchHelper = TouchHelper.create(getWindow().getDecorView().getRootView(), getRawInputCallback());

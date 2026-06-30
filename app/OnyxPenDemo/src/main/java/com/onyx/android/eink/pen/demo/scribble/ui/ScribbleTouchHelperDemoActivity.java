@@ -63,6 +63,7 @@ public class ScribbleTouchHelperDemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pen_stylus_touch_helper_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
         deviceReceiver.enable(this, true);
         binding.setActivityPenStylusTouchHelper(this);
 

@@ -44,6 +44,7 @@ public class ScribbleWebViewDemoActivity extends AppCompatActivity implements Vi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scribble_webview_stylus_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
 
 
         binding.buttonPen.setOnClickListener(this);

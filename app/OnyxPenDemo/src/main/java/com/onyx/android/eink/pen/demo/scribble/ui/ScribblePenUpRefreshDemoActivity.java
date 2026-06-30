@@ -58,6 +58,7 @@ public class ScribblePenUpRefreshDemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pen_up_refresh_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
         binding.setActivityPenUpRefresh(this);
         initSurfaceView(binding.surfaceview1);
         initPaint();

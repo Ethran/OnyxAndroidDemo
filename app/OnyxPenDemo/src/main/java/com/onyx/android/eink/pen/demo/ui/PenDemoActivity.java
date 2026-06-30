@@ -93,6 +93,7 @@ public class PenDemoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pen_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
 
         EpdController.enablePost(binding.getRoot(), 1);
         deviceReceiver.enable(this, true);

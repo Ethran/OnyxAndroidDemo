@@ -52,6 +52,7 @@ public class ScribbleMoveEraserDemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scribble_move_erase_stylus_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
         binding.setActivityScribbleMoveErase(this);
         initSurfaceView();
     }

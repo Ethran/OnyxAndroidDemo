@@ -65,6 +65,7 @@ public class ScribbleFingerTouchDemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_finger_touch_helper_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
         deviceReceiver.enable(this, true);
         binding.setActivity(this);
 

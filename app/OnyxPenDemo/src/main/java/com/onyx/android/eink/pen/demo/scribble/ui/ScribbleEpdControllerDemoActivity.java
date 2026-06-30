@@ -43,6 +43,7 @@ public class ScribbleEpdControllerDemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scribble_epd_controller_demo);
+        com.onyx.android.eink.pen.demo.util.FreezeIndicatorView.attach(this);
         initButtonView();
         getHostView().setOnTouchListener(new View.OnTouchListener() {
             @Override
