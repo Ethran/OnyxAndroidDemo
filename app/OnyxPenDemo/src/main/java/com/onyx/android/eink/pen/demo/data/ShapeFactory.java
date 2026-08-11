@@ -61,6 +61,7 @@ public class ShapeFactory {
             default:
                 shape = new NormalPencilShape();
         }
+        shape.setShapeType(type);
         return shape;
     }
 

@@ -7,8 +7,8 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.view.SurfaceView;
 
-import com.onyx.android.eink.pen.demo.bean.EraseArgs;
 import com.onyx.android.eink.pen.demo.data.InteractiveMode;
+import com.onyx.android.eink.pen.demo.erase.bean.EraseArgs;
 import com.onyx.android.eink.pen.demo.render.EraseRenderer;
 import com.onyx.android.eink.pen.demo.render.NormalRenderer;
 import com.onyx.android.eink.pen.demo.render.PartialRefreshRenderer;
@@ -35,6 +35,7 @@ public class RendererHelper {
         public void recycleBitmap() {
             BitmapUtils.recycle(bitmap);
             bitmap = null;
+            canvas = null;
         }
     }
 

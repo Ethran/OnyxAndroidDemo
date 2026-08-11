@@ -1,7 +1,12 @@
 <resources>
     <string name="brush">笔刷</string>
     <string name="eraser">擦除</string>
+    <string name="eraser_width">擦除宽度</string>
     <string name="erase_track">擦除轨迹</string>
+    <string name="erase_track_area">显示区域擦除轨迹</string>
+    <string name="erase_track_move">显示移动擦除轨迹</string>
+    <string name="erase_track_stroke">显示笔画擦除轨迹</string>
+    <string name="erase_track_app_layer_hint">（应用层预览）</string>
     <string name="pen_up_refresh">抬笔刷新</string>
     <string name="color">颜色</string>
     <string name="texture">纹理</string>

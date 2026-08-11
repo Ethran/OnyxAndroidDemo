@@ -48,4 +48,10 @@
     <string name="refresh_mode_fast">Fast Refresh</string>
     <string name="refresh_mode_fast_x">X Refresh</string>
     <string name="current_firmware_info">Current Firmware Info:</string>
+    <string name="dict_query_param_error">Please enter a keyword to query.</string>
+    <string name="dict_query_no_data">No definition found for this keyword.</string>
+    <string name="dict_query_error">Dictionary query failed. Please make sure the dictionary app is installed and try again.</string>
+    <string name="dict_query_keyword_hint">input keyword</string>
+    <string name="dict_query_button">Find</string>
+    <string name="dict_query_unknown_dictionary">Dictionary</string>
 </resources>

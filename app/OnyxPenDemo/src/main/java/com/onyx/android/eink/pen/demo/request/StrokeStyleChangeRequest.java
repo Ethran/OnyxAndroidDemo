@@ -25,6 +25,8 @@ public class StrokeStyleChangeRequest extends BaseRequest {
 
     @Override
     public void execute(PenManager penManager) throws Exception {
-        getPenManager().setStrokeStyle(ShapeFactory.getStrokeStyle(shapeType, texture));
+        int strokeStyle = ShapeFactory.getStrokeStyle(shapeType, texture);
+        getPenManager().setStrokeStyle(strokeStyle);
+        getPenManager().applyStrokeParameters(shapeType, strokeStyle);
     }
 }

@@ -9,7 +9,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.view.SurfaceView;
 
-import com.onyx.android.eink.pen.demo.bean.EraseArgs;
+import com.onyx.android.eink.pen.demo.erase.bean.EraseArgs;
 import com.onyx.android.eink.pen.demo.helper.RendererHelper;
 import com.onyx.android.eink.pen.demo.shape.Shape;
 import com.onyx.android.eink.pen.demo.util.RendererUtils;
@@ -44,17 +44,15 @@ public class EraseRenderer extends BaseRenderer {
     }
 
     private void drawEraseCircle(Canvas canvas, RendererHelper.RenderContext renderContext) {
-        if (!renderContext.eraseArgs.showEraseCircle) {
+        if (renderContext.eraseArgs == null || !renderContext.eraseArgs.showEraseCircle) {
             return;
         }
         EraseArgs eraseArgs = renderContext.eraseArgs;
         TouchPoint erasePoint = eraseArgs.getErasePoint();
-        float drawRadius = eraseArgs.drawRadius;
-        if (erasePoint == null
-                || erasePoint.getX() <= 0
-                || erasePoint.getY() <= 0) {
+        if (erasePoint == null) {
             return;
         }
+        float drawRadius = eraseArgs.drawRadius;
         canvas.drawCircle(erasePoint.getX(), erasePoint.getY(), drawRadius, createPaint(Color.BLACK));
     }
 
@@ -69,8 +67,16 @@ public class EraseRenderer extends BaseRenderer {
 
     @Override
     public void renderToBitmap(SurfaceView surfaceView, RendererHelper.RenderContext renderContext) {
+        if (renderContext.eraseArgs == null
+                || renderContext.eraseArgs.showEraseLine
+                || renderContext.eraseArgs.eraseTrackPoints == null) {
+            return;
+        }
         TouchPointList pointList = renderContext.eraseArgs.eraseTrackPoints;
         Path path = createPath(pointList);
+        if (path == null) {
+            return;
+        }
         renderContext.canvas.drawPath(path, renderContext.paint);
     }
 
@@ -78,6 +84,23 @@ public class EraseRenderer extends BaseRenderer {
     public void renderToBitmap(List<Shape> shapes, RendererHelper.RenderContext renderContext) {
         for (Shape shape : shapes) {
             shape.render(renderContext);
+        }
+    }
+
+    private void drawEraseDashLine(Canvas canvas, RendererHelper.RenderContext renderContext) {
+        if (renderContext.eraseArgs == null || !renderContext.eraseArgs.showEraseLine) {
+            return;
+        }
+        TouchPointList pointList = renderContext.eraseArgs.wholeEraseTrackPoints;
+        if (pointList == null || pointList.isEmpty()) {
+            pointList = renderContext.eraseArgs.eraseTrackPoints;
+        }
+        if (pointList == null || pointList.isEmpty()) {
+            return;
+        }
+        Path path = createPath(pointList);
+        if (path != null) {
+            canvas.drawPath(path, createPaint(Color.BLACK));
         }
     }
 
@@ -98,6 +121,7 @@ public class EraseRenderer extends BaseRenderer {
         try {
             RendererUtils.renderBackground(canvas, rect);
             drawRendererContent(renderContext.bitmap, canvas);
+            drawEraseDashLine(canvas, renderContext);
             drawEraseCircle(canvas, renderContext);
         } catch (Exception e) {
             e.printStackTrace();

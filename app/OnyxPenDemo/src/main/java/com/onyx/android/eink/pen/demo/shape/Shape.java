@@ -74,6 +74,18 @@ public class Shape {
         return boundingRect;
     }
 
+    public int getShapeType() {
+        return shapeType;
+    }
+
+    public int getTexture() {
+        return texture;
+    }
+
+    public TouchPointList getTouchPointList() {
+        return touchPointList;
+    }
+
     public void setBoundingRect(RectF boundingRect) {
         this.boundingRect = boundingRect;
     }
@@ -153,7 +165,16 @@ public class Shape {
         return false;
     }
 
-    private boolean hitTest(float x, float y, float radius) {
+    public boolean fastHitTest(float x, float y, float radius) {
+        if (boundingRect == null) {
+            return false;
+        }
+        RectF hitRect = new RectF(boundingRect);
+        hitRect.inset(-radius, -radius);
+        return hitRect.contains(x, y);
+    }
+
+    public boolean hitTest(float x, float y, float radius) {
         final float limit = radius;
         boolean hit = false;
         int first, second;

@@ -1,7 +1,10 @@
 package com.onyx.android.eink.pen.demo.util;
 
+import androidx.annotation.Nullable;
+
 import com.onyx.android.eink.pen.demo.data.ShapeFactory;
 import com.onyx.android.sdk.data.PenConstant;
+import com.onyx.android.sdk.pen.utils.PenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,5 +80,52 @@ public class PenInfoUtils {
 
     public static boolean isMarkerStrokeStyle(int shapeType) {
         return ShapeFactory.isMarkerShape(shapeType);
+    }
+
+    public static boolean supportPressureSensitivity(int shapeType) {
+        if (!PenConstant.ENABLE_CONFIG_PEN_PRESSURE_SENSITIVITY) {
+            return false;
+        }
+        return shapeType == ShapeFactory.SHAPE_BRUSH_SCRIBBLE;
+    }
+
+    public static boolean supportSmoothLevel(int shapeType) {
+        return shapeType == ShapeFactory.SHAPE_BRUSH_SCRIBBLE;
+    }
+
+    public static float getDefaultPressureSensitivity(int shapeType) {
+        return PenUtils.KEPLER_DEFAULT_PRESSURE_SENSITIVITY;
+    }
+
+    public static float getDefaultSmoothLevel(int shapeType) {
+        return PenUtils.DEFAULT_SMOOTH_LEVEL;
+    }
+
+    /**
+     * [0]=pressure, [1]=smooth.
+     * Returns null when the shape does not override Device params.
+     */
+    @Nullable
+    public static float[] mergeStrokeParameters(int shapeType, @Nullable float[] current) {
+        boolean needPressure = supportPressureSensitivity(shapeType);
+        boolean needSmooth = supportSmoothLevel(shapeType);
+        if (!needPressure && !needSmooth) {
+            return null;
+        }
+        int minLen = needSmooth ? 2 : 1;
+        float[] next;
+        if (current == null || current.length < 1) {
+            next = new float[minLen];
+        } else {
+            next = new float[Math.max(current.length, minLen)];
+            System.arraycopy(current, 0, next, 0, current.length);
+        }
+        if (needPressure) {
+            next[0] = getDefaultPressureSensitivity(shapeType);
+        }
+        if (needSmooth) {
+            next[1] = getDefaultSmoothLevel(shapeType);
+        }
+        return next;
     }
 }

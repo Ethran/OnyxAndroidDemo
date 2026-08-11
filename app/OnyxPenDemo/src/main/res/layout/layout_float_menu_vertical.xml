@@ -40,19 +40,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/erase_track"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/float_display_erase_track_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:id="@+id/float_pen_up_container"
             android:layout_width="wrap_content"

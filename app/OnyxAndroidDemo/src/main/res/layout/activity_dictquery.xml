@@ -23,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="input keyword"
+                android:hint="@string/dict_query_keyword_hint"
                 android:minHeight="40dp" />
 
             <Button
@@ -32,13 +32,24 @@
                 android:layout_height="wrap_content"
                 android:minHeight="40dp"
                 android:onClick="@{activityDictQuery::onClick}"
-                android:text="Find" />
+                android:text="@string/dict_query_button" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textview_query_result"
+        <Spinner
+            android:id="@+id/spinner_dict"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:minHeight="@dimen/dict_spinner_min_height"
+            android:paddingStart="@dimen/dict_spinner_padding_horizontal"
+            android:paddingEnd="@dimen/dict_spinner_padding_horizontal"
+            android:spinnerMode="dropdown"
+            android:visibility="gone" />
+
+        <WebView
+            android:id="@+id/webview_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
 </layout>

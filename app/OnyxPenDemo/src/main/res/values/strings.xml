@@ -2,7 +2,12 @@
     <string name="app_name">OnyxPenDemo</string>
     <string name="brush">Brush</string>
     <string name="eraser">Eraser</string>
+    <string name="eraser_width">Eraser width</string>
     <string name="erase_track">Erasing Track</string>
+    <string name="erase_track_area">Show lasso track</string>
+    <string name="erase_track_move">Show move eraser track</string>
+    <string name="erase_track_stroke">Show stroke eraser track</string>
+    <string name="erase_track_app_layer_hint"> (app preview)</string>
     <string name="pen_up_refresh">Pen Up Refresh</string>
     <string name="color">Color</string>
     <string name="texture">Texture</string>

@@ -5,6 +5,9 @@ import android.graphics.Rect;
 
 import com.onyx.android.eink.pen.demo.data.ShapeFactory;
 import com.onyx.android.eink.pen.demo.data.ShapeType;
+import com.onyx.android.eink.pen.demo.erase.data.EraseTypes;
+import com.onyx.android.eink.pen.demo.erase.util.EraseUnits;
+import com.onyx.android.eink.pen.demo.erase.util.EraserTrackHelper;
 import com.onyx.android.eink.pen.demo.util.PenInfoUtils;
 import com.onyx.android.sdk.data.note.PenTexture;
 
@@ -27,7 +30,10 @@ public class PenBundle {
     private float currentStrokeWidth;
 
     private boolean isErasing = false;
-    private float currentEraseWidth = 20.0f;
+    private int currentEraseType = EraseTypes.ERASER_STROKE;
+    private int lastEraseType = EraseTypes.ERASER_STROKE;
+    private final Map<Integer, Float> eraseWidthMap = new HashMap<>();
+    private final Map<Integer, Boolean> displayEraseTrackMap = new HashMap<>();
 
     private boolean displayEraseTrack = false;
     private boolean enablePenUpRefresh = false;
@@ -37,6 +43,7 @@ public class PenBundle {
 
     private PenBundle() {
         initDefaultPenLineWidth();
+        initDefaultEraseSettings();
         setCurrentStrokeWidth(getPenLineWidth(currentShapeType));
     }
 
@@ -45,6 +52,19 @@ public class PenBundle {
             int shapeType = style.getValue();
             penLineWidthMap.put(shapeType, PenInfoUtils.getShapeDefaultStrokeWidth(shapeType));
         }
+    }
+
+    private void initDefaultEraseSettings() {
+        int[] eraseTypes = new int[]{
+                EraseTypes.ERASER_STROKE,
+                EraseTypes.ERASER_MOVE,
+                EraseTypes.ERASER_AREA
+        };
+        for (int eraseType : eraseTypes) {
+            eraseWidthMap.put(eraseType, EraseUnits.getDefaultEraseWidth(eraseType));
+            displayEraseTrackMap.put(eraseType, EraserTrackHelper.defaultTrackEnabled(eraseType));
+        }
+        displayEraseTrack = isDisplayEraseTrack(EraseTypes.ERASER_STROKE);
     }
 
     public static PenBundle getInstance() {
@@ -120,20 +140,78 @@ public class PenBundle {
         isErasing = erasing;
     }
 
+    public void resetToolToBrushOnSessionEnd() {
+        isErasing = false;
+    }
+
+    public boolean isEraseTool() {
+        return isErasing();
+    }
+
+    public int getCurrentEraseType() {
+        return currentEraseType;
+    }
+
+    public void setCurrentEraseType(int currentEraseType) {
+        this.currentEraseType = currentEraseType;
+        this.lastEraseType = currentEraseType;
+        displayEraseTrack = isDisplayEraseTrack(currentEraseType);
+    }
+
+    public int getLastEraseType() {
+        return lastEraseType;
+    }
+
+    public void selectEraseType(int eraseType) {
+        setCurrentEraseType(eraseType);
+    }
+
+    public float getEraseWidth(int eraseType) {
+        Float width = eraseWidthMap.get(eraseType);
+        if (width != null) {
+            return width;
+        }
+        float defaultWidth = EraseUnits.getDefaultEraseWidth(eraseType);
+        eraseWidthMap.put(eraseType, defaultWidth);
+        return defaultWidth;
+    }
+
+    public void setEraseWidth(int eraseType, float eraseWidth) {
+        eraseWidthMap.put(eraseType, EraseUnits.clampEraseWidth(eraseWidth, eraseType));
+    }
+
     public float getCurrentEraseWidth() {
-        return currentEraseWidth;
+        return getEraseWidth(currentEraseType);
     }
 
     public void setCurrentEraseWidth(float currentEraseWidth) {
-        this.currentEraseWidth = currentEraseWidth;
+        setEraseWidth(currentEraseType, currentEraseWidth);
     }
 
     public boolean isDisplayEraseTrack() {
-        return displayEraseTrack;
+        return isDisplayEraseTrack(currentEraseType);
+    }
+
+    public boolean isDisplayEraseTrack(int eraseType) {
+        Boolean displayTrack = displayEraseTrackMap.get(eraseType);
+        if (displayTrack != null) {
+            return displayTrack;
+        }
+        boolean defaultValue = EraserTrackHelper.defaultTrackEnabled(eraseType);
+        displayEraseTrackMap.put(eraseType, defaultValue);
+        return defaultValue;
     }
 
     public void setDisplayEraseTrack(boolean displayEraseTrack) {
         this.displayEraseTrack = displayEraseTrack;
+        setDisplayEraseTrack(currentEraseType, displayEraseTrack);
+    }
+
+    public void setDisplayEraseTrack(int eraseType, boolean displayEraseTrack) {
+        displayEraseTrackMap.put(eraseType, displayEraseTrack);
+        if (eraseType == currentEraseType) {
+            this.displayEraseTrack = displayEraseTrack;
+        }
     }
 
     public boolean isEnablePenUpRefresh() {

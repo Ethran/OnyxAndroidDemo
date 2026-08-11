@@ -3,6 +3,7 @@ package com.onyx.android.eink.pen.demo.shape;
 import android.graphics.Paint;
 
 import com.onyx.android.eink.pen.demo.helper.RendererHelper;
+import com.onyx.android.eink.pen.demo.util.PenInfoUtils;
 import com.onyx.android.sdk.api.device.epd.EpdController;
 import com.onyx.android.sdk.data.note.TouchPoint;
 import com.onyx.android.sdk.pen.NeoFountainPenWrapper;
@@ -22,13 +23,16 @@ public class BrushScribbleShape extends Shape {
         if (points == null || points.size() < 2) {
             return;
         }
+        Paint.Style oldStyle = renderContext.paint.getStyle();
+        float oldWidth = renderContext.paint.getStrokeWidth();
         applyFountainPaintStyle(renderContext);
         renderFountainV2(renderContext, copyAndNormalizePressure(points));
+        renderContext.paint.setStyle(oldStyle);
+        renderContext.paint.setStrokeWidth(oldWidth);
     }
 
     private void applyFountainPaintStyle(RendererHelper.RenderContext renderContext) {
-        // Fountain pen results are closed paths; use FILL for both draw and erase so
-        // CLEAR covers the same footprint as the original stroke.
+        // Fountain NeoPenV2 outputs closed paths; FILL so draw and CLEAR erase share footprint.
         renderContext.paint.setStyle(Paint.Style.FILL);
         renderContext.paint.setStrokeWidth(0.0f);
     }
@@ -38,15 +42,23 @@ public class BrushScribbleShape extends Shape {
         if (renderPoints.size() < 2) {
             return;
         }
-        NeoPen pen = FountainShapes.INSTANCE.createNeoPenV2(getRenderStrokeWidth(),
+        NeoPen pen = FountainShapes.INSTANCE.createNeoPenV2(
+                getRenderStrokeWidth(),
                 NeoFountainPenWrapper.MIN_FOUNTAIN_PEN_WIDTH,
-                1.0f, 1.0f, 1.0f, 1.0f, null, true, null);
+                1.0f,
+                1.0f,
+                1.0f,
+                1.0f,
+                PenInfoUtils.getDefaultPressureSensitivity(getShapeType()),
+                true,
+                PenInfoUtils.getDefaultSmoothLevel(getShapeType()));
         if (pen == null) {
             return;
         }
         NeoPenRender penRender = new NeoPenRender(pen);
         try {
-            penRender.render(renderContext.canvas, renderContext.paint, renderPoints);
+            penRender.onTouchPointList(renderPoints);
+            penRender.render(renderContext.canvas, renderContext.paint);
         } finally {
             penRender.destroyPen();
         }

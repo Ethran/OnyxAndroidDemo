@@ -8,4 +8,9 @@
     <dimen name="common_button_radius">0dp</dimen>
     <dimen name="common_button_padding_horizontal">8dp</dimen>
     <dimen name="common_button_margin_top">10dp</dimen>
+    <dimen name="dict_spinner_text_size">22sp</dimen>
+    <dimen name="dict_spinner_dropdown_text_size">24sp</dimen>
+    <dimen name="dict_spinner_min_height">48dp</dimen>
+    <dimen name="dict_spinner_dropdown_min_height">56dp</dimen>
+    <dimen name="dict_spinner_padding_horizontal">12dp</dimen>
 </resources>

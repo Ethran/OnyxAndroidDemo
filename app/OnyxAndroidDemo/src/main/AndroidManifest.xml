@@ -2,6 +2,11 @@
 
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
+    <queries>
+        <provider android:authorities="com.onyx.dict.DictionaryProvider" />
+        <package android:name="com.onyx.dict" />
+    </queries>
+
     <application
         android:name="com.android.onyx.demo.SampleApplication"
         android:allowBackup="true"
