@@ -3,6 +3,8 @@ package com.android.onyx.demo;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
@@ -29,9 +31,15 @@ import java.util.List;
 
 public class DictionaryActivity extends AppCompatActivity {
 
+    private static final int DELAY_DICTIONARY_LOAD_MS = 2000;
+    private static final int MAX_LOADING_RETRY = 5;
+
     private ActivityDictqueryBinding binding;
     private final List<DictionaryQuery.Dictionary> dictionaryResults = new ArrayList<>();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean suppressSpinnerCallback;
+    private int dictionaryLoadCount;
+    private Runnable pendingLoadingRetry;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +50,15 @@ public class DictionaryActivity extends AppCompatActivity {
         setupSpinner();
     }
 
+    @Override
+    protected void onDestroy() {
+        cancelPendingLoadingRetry();
+        super.onDestroy();
+    }
+
     public void onClick(View v) {
+        dictionaryLoadCount = 0;
+        cancelPendingLoadingRetry();
         queryDictionary(binding.edittextKeyword.getText().toString().trim());
     }
 
@@ -84,12 +100,15 @@ public class DictionaryActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(DictionaryQuery dictionaryQuery) {
-                handleQueryResult(dictionaryQuery);
+                if (isFinishing()) {
+                    return;
+                }
+                handleQueryResult(keyword, dictionaryQuery);
             }
         }.execute();
     }
 
-    private void handleQueryResult(@Nullable DictionaryQuery dictionaryQuery) {
+    private void handleQueryResult(final String keyword, @Nullable DictionaryQuery dictionaryQuery) {
         if (dictionaryQuery == null) {
             showMessage(R.string.dict_query_error, Toast.LENGTH_SHORT);
             return;
@@ -104,16 +123,43 @@ public class DictionaryActivity extends AppCompatActivity {
                 }
                 bindDictionaryResults(list);
                 break;
+            case DictionaryQuery.DICT_STATE_LOADING:
+                handleLoadingState(keyword);
+                break;
+            case DictionaryQuery.DICT_STATE_QUERY_FAILED:
+                showMessage(R.string.dict_query_failed, Toast.LENGTH_SHORT);
+                break;
             case DictionaryQuery.DICT_STATE_NO_DATA:
                 showMessage(R.string.dict_query_no_data, Toast.LENGTH_SHORT);
                 break;
             case DictionaryQuery.DICT_STATE_PARAM_ERROR:
                 showMessage(R.string.dict_query_param_error, Toast.LENGTH_SHORT);
                 break;
+            case DictionaryQuery.DICT_STATE_ERROR:
             default:
                 showMessage(R.string.dict_query_error, Toast.LENGTH_SHORT);
                 break;
         }
+    }
+
+    private void handleLoadingState(final String keyword) {
+        if (dictionaryLoadCount >= MAX_LOADING_RETRY) {
+            showMessage(R.string.dict_query_load_fail, Toast.LENGTH_SHORT);
+            return;
+        }
+        showMessage(R.string.dict_query_loading, Toast.LENGTH_SHORT);
+        dictionaryLoadCount++;
+        cancelPendingLoadingRetry();
+        pendingLoadingRetry = new Runnable() {
+            @Override
+            public void run() {
+                pendingLoadingRetry = null;
+                if (!isFinishing()) {
+                    queryDictionary(keyword);
+                }
+            }
+        };
+        handler.postDelayed(pendingLoadingRetry, DELAY_DICTIONARY_LOAD_MS);
     }
 
     private void bindDictionaryResults(List<DictionaryQuery.Dictionary> list) {
@@ -156,6 +202,13 @@ public class DictionaryActivity extends AppCompatActivity {
         dictionaryResults.clear();
         loadHtml("");
         Toast.makeText(this, message, duration).show();
+    }
+
+    private void cancelPendingLoadingRetry() {
+        if (pendingLoadingRetry != null) {
+            handler.removeCallbacks(pendingLoadingRetry);
+            pendingLoadingRetry = null;
+        }
     }
 
     private void hideSoftKeyboard() {

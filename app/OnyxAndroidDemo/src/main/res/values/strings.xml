@@ -50,6 +50,9 @@
     <string name="current_firmware_info">Current Firmware Info:</string>
     <string name="dict_query_param_error">Please enter a keyword to query.</string>
     <string name="dict_query_no_data">No definition found for this keyword.</string>
+    <string name="dict_query_failed">Dictionary query failed. No definition found.</string>
+    <string name="dict_query_loading">Dictionary is loading, please wait…</string>
+    <string name="dict_query_load_fail">Dictionary load timed out. Please try again later.</string>
     <string name="dict_query_error">Dictionary query failed. Please make sure the dictionary app is installed and try again.</string>
     <string name="dict_query_keyword_hint">input keyword</string>
     <string name="dict_query_button">Find</string>
